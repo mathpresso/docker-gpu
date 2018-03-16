@@ -1,0 +1,15 @@
+FROM mathpresso/cuda8.0-cudnn7-opencv:3.2.0
+# TO: mathpresso/cuda8.0-cudnn7-opencv3.2.0-tensorrt:3.0.4
+
+RUN wget https://bootstrap.pypa.io/get-pip.py \
+    && python3 get-pip.py \
+    && rm get-pip.py
+
+RUN wget https://s3.ap-northeast-2.amazonaws.com/mathpresso-rnd/nvidia/TensorRT-3.0.4.Ubuntu-16.04.3.x86_64.cuda-8.0.cudnn7.0.tar.gz \
+    && tar zxvf TensorRT-3.0.4.Ubuntu-16.04.3.x86_64.cuda-8.0.cudnn7.0.tar.gz \
+    && mv TensorRT-3.0.4/lib/* /usr/local/lib/ \
+    && pip3 install --upgrade numpy \
+    && pip3 install TensorRT-3.0.4/python/tensorrt-3.0.4-cp35-cp35m-linux_x86_64.whl \
+    && pip3 install TensorRT-3.0.4/uff/uff-0.2.0-py2.py3-none-any.whl \
+    && rm TensorRT-3.0.4 TensorRT-3.0.4.Ubuntu-16.04.3.x86_64.cuda-8.0.cudnn7.0.tar.gz -rf
+ 
