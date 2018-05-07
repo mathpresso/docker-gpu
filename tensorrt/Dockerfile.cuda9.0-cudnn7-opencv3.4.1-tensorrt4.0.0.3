@@ -1,0 +1,18 @@
+FROM mathpresso/cuda9.0-cudnn7-opencv:3.4.1
+# TO: mathpresso/cuda9.0-cudnn7-opencv3.4.1-tensorrt:4.0.0.3
+
+RUN apt-get update && apt-get install -y \
+        build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN wget https://bootstrap.pypa.io/get-pip.py \
+    && python3 get-pip.py \
+    && rm get-pip.py
+
+RUN wget https://s3.ap-northeast-2.amazonaws.com/mathpresso-rnd/nvidia/TensorRT-4.0.0.3.Ubuntu-16.04.4.x86_64-gnu.cuda-9.0.cudnn7.0.tar.gz \
+    && tar zxvf TensorRT-4.0.0.3.Ubuntu-16.04.4.x86_64-gnu.cuda-9.0.cudnn7.0.tar.gz \
+    && mv TensorRT-4.0.0.3/lib/* /usr/local/lib/ \
+    && pip3 install --upgrade numpy \
+    && pip3 install TensorRT-4.0.0.3/python/tensorrt-4.0.0.3-cp35-cp35m-linux_x86_64.whl \
+    && pip3 install TensorRT-4.0.0.3/uff/uff-0.3.0-py2.py3-none-any.whl \
+    && rm TensorRT-4.0.0.3 TensorRT-4.0.0.3.Ubuntu-16.04.4.x86_64-gnu.cuda-9.0.cudnn7.0.tar.gz -rf
